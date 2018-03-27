@@ -22,7 +22,8 @@ export default class App extends Component<Props> {
       <View style={styles.container}>
         <DateRangePicker
           initialRange={['2018-04-01', '2018-04-10']}
-          onSuccess={(s, e) => alert(s + '||' + e)}/>
+          onSuccess={(s, e) => alert(s + '||' + e)}
+          theme={{ markColor: 'red', markTextColor: 'white' }}/>
       </View>
     );
   }
