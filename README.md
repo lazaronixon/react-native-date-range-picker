@@ -22,7 +22,7 @@ export default class App extends Component<Props> {
       <View style={styles.container}>
         <DateRangePicker
           initialRange={['2018-04-01', '2018-04-10']}
-          onSuccess={(s, e) => alert(s + '||' + e)}
+          onSuccess={(s, e) => console.log(s, e)}
           theme={{ markColor: 'red', markTextColor: 'white' }}/>
       </View>
     );
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
 An Initial range for component. The fromDate is used to set current month.
 
 #### `onSuccess(fromDate, toDate)`
-Function executed when a valid range is selected.
+Function executed when a valid range is selected and return Object
 
 #### `theme`
 Extra theme properties.
