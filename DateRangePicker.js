@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Calendar, defaultStyle } from 'react-native-calendars'
-
-const XDate = require('xdate');
+import XDate from 'xdate'
 
 type Props = {
   initialRange: React.PropTypes.array.isRequired,
   onSuccess: React.PropTypes.func.isRequired,
-};
+}
 export default class DateRangePicker extends Component<Props> {
 
   state = {isFromDatePicked: false, isToDatePicked: false, markedDates: {}}
@@ -19,10 +18,10 @@ export default class DateRangePicker extends Component<Props> {
       this.setupStartMarker(day)
     } else if (!this.state.isToDatePicked) {
       let markedDates = {...this.state.markedDates}
-      let [mMarkedDates, range] = this.setupMarkedDates(this.state.fromDate, day.dateString, markedDates)
+      let [mMarkedDates, range] = this.setupMarkedDates(this.state.fromDate.dateString, day.dateString, markedDates)
       if (range >= 0) {
         this.setState({isFromDatePicked: true, isToDatePicked: true, markedDates: mMarkedDates})
-        this.props.onSuccess(this.state.fromDate, day.dateString)
+        this.props.onSuccess(this.state.fromDate, day)
       } else {
         this.setupStartMarker(day)
       }
@@ -31,7 +30,7 @@ export default class DateRangePicker extends Component<Props> {
 
   setupStartMarker = (day) => {
     let markedDates = {[day.dateString]: {startingDay: true, color: this.props.theme.markColor, textColor: this.props.theme.markTextColor}}
-    this.setState({isFromDatePicked: true, isToDatePicked: false, fromDate: day.dateString, markedDates: markedDates})
+    this.setState({isFromDatePicked: true, isToDatePicked: false, fromDate: day, markedDates: markedDates})
   }
 
   setupMarkedDates = (fromDate, toDate, markedDates) => {
@@ -66,14 +65,16 @@ export default class DateRangePicker extends Component<Props> {
   render() {
     return (
       <Calendar {...this.props}
+                hideExtraDays
                 markingType={'period'}
                 current={this.state.fromDate}
                 markedDates={this.state.markedDates}
-                onDayPress={(day) => {this.onDayPress(day)}}/>
+                onDayPress={(day) => {this.onDayPress(day)}}
+                />
     )
   }
 }
 
 DateRangePicker.defaultProps = {
   theme: { markColor: '#00adf5', markTextColor: '#ffffff' }
-};
+}
